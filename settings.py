@@ -13,3 +13,12 @@ class Settings:
         self.snake_width = 10
         self.snake_height = 10
         self.snake_color = (4, 184, 52)
+
+        # Settings for the fruit
+        self.fruit_width = 10
+        self.fruit_height = 10
+        self.fruit_color = (255, 0, 0)
+        self.fruit_value = 10
+
+        # Where the data will be stored
+        self.datapath = "data/highscore.json"

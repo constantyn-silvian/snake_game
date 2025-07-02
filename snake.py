@@ -32,30 +32,29 @@ class Snake:
 
         # Check if going inside yourself and update the snakes position
         if not (new_x, new_y) in self.snake_tail:
-            self.snake_tail.append((new_x, new_y))
-            self.snake_tail.pop(0)
             self.last_dir = self.cur_dir
         else:
             self.cur_dir = self.last_dir
             self.update_direction(self.cur_dir)
             new_x, new_y = self._get_new_positions()
-            self.snake_tail.append((new_x, new_y))
-            self.snake_tail.pop(0)
+
+        self.snake_tail.append((new_x, new_y))
+        self.snake_tail.pop(0)
 
     def _get_new_positions(self):
         """Return the new positions where the snake will be heading"""
         if self.moving_right:
-            new_x = self.snake_tail[len(self.snake_tail) - 1][0] + 10
-            new_y = self.snake_tail[len(self.snake_tail) - 1][1]
+            new_x = self.snake_tail[-1][0] + 10
+            new_y = self.snake_tail[-1][1]
         elif self.moving_left:
-            new_x = self.snake_tail[len(self.snake_tail) - 1][0] - 10
-            new_y = self.snake_tail[len(self.snake_tail) - 1][1]
+            new_x = self.snake_tail[-1][0] - 10
+            new_y = self.snake_tail[-1][1]
         elif self.moving_up:
-            new_x = self.snake_tail[len(self.snake_tail) - 1][0] 
-            new_y = self.snake_tail[len(self.snake_tail) - 1][1] - 10
+            new_x = self.snake_tail[-1][0] 
+            new_y = self.snake_tail[-1][1] - 10
         elif self.moving_down:
-            new_x = self.snake_tail[len(self.snake_tail) - 1][0]
-            new_y = self.snake_tail[len(self.snake_tail) - 1][1] + 10
+            new_x = self.snake_tail[-1][0]
+            new_y = self.snake_tail[-1][1] + 10
         
         return new_x, new_y
 
@@ -76,6 +75,21 @@ class Snake:
             self.moving_up = True
         elif dir == 'd':
             self.moving_down = True
+    
+    def append_tail(self):
+        """Makes the snake bigger with """
+        self.snake_tail.append(self.snake_tail[-1])
+
+    def collide_edges(self):
+        """Check if the snake collides with the edges"""
+        frontx, fronty = self.snake_tail[-1]
+        return frontx < 0 or frontx >= self.settings.screen_width or fronty < 0 or fronty >= self.settings.screen_height
+    
+    def collide_himself(self):
+        """Check if the snake collides with himself"""
+        if self.snake_tail[-1] in self.snake_tail[:-1]:
+            return True
+        return False
 
     def draw_tail(self):
         """Draw the snake and his tail"""
