@@ -7,6 +7,7 @@ from snake import Snake
 from fruit import Fruit
 from game_stats import GameStats
 from scoreboard import ScoreBoard
+
 class SnakeGame:
     """A class for the games behavior and resources"""
 
@@ -28,6 +29,12 @@ class SnakeGame:
 
         # Create the fruit instance
         self.fruit = Fruit(self)
+
+        # Create the sound instances
+        self.fruit_sound = pygame.mixer.Sound("sound/video-game-bonus-323603.mp3")
+        self.game_over_sound = pygame.mixer.Sound("sound/game-over-arcade-6435.mp3")
+        self.fruit_sound.set_volume(0.1)
+        self.game_over_sound.set_volume(0.3)
 
     def run_game(self):
         """The main loop of the game"""
@@ -70,6 +77,7 @@ class SnakeGame:
         """Check collision between snake and edges and himself"""
         if self.snake.collide_edges() or self.snake.collide_himself():
             # Show the game over msg and update the screen one last time
+            self.game_over_sound.play()
             self.sb.prep_game_over_msg()
             self.sb.show_game_over_msg()
             pygame.display.flip()
@@ -88,6 +96,7 @@ class SnakeGame:
 
     def _collide_snake_fruit(self, new_pos):
         """Reposition the fruit if the snake eats it and make the snake and score bigger"""
+        self.fruit_sound.play()
         self.fruit.random_position_fruit()
         self.snake.append_tail()
         self.stats.score += self.settings.fruit_value

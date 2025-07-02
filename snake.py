@@ -11,10 +11,12 @@ class Snake:
         self.screen_rect = self.screen.get_rect()
         self.settings = Settings()
 
-        # Position the snakes first parts"""
+        # Position the snakes first parts and store its dimension"""
+        self.snake_dim = self.settings.snake_dim
+        
         self.snake_tail = []
         for i in range(4):
-            self.snake_tail.append((self.settings.screen_width // 2 - 30 + i * 10, self.settings.screen_height // 2))
+            self.snake_tail.append((self.settings.screen_width // 2 - 3 * self.snake_dim + i * self.snake_dim, self.settings.screen_height // self.snake_dim // 2 * self.snake_dim))
 
         # Moving flags and last direction and curent direction
         self.moving_right = True
@@ -44,17 +46,17 @@ class Snake:
     def _get_new_positions(self):
         """Return the new positions where the snake will be heading"""
         if self.moving_right:
-            new_x = self.snake_tail[-1][0] + 10
+            new_x = self.snake_tail[-1][0] + self.snake_dim
             new_y = self.snake_tail[-1][1]
         elif self.moving_left:
-            new_x = self.snake_tail[-1][0] - 10
+            new_x = self.snake_tail[-1][0] - self.snake_dim
             new_y = self.snake_tail[-1][1]
         elif self.moving_up:
             new_x = self.snake_tail[-1][0] 
-            new_y = self.snake_tail[-1][1] - 10
+            new_y = self.snake_tail[-1][1] - self.snake_dim
         elif self.moving_down:
             new_x = self.snake_tail[-1][0]
-            new_y = self.snake_tail[-1][1] + 10
+            new_y = self.snake_tail[-1][1] + self.snake_dim
         
         return new_x, new_y
 
@@ -78,7 +80,7 @@ class Snake:
     
     def append_tail(self):
         """Makes the snake bigger with """
-        self.snake_tail.append(self.snake_tail[-1])
+        self.snake_tail.insert(0, self.snake_tail[0])
 
     def collide_edges(self):
         """Check if the snake collides with the edges"""
@@ -94,5 +96,5 @@ class Snake:
     def draw_tail(self):
         """Draw the snake and his tail"""
         for x, y in self.snake_tail:
-            rect = pygame.rect.Rect(x, y, self.settings.snake_width, self.settings.snake_height)
+            rect = pygame.rect.Rect(x, y, self.snake_dim, self.snake_dim)
             self.screen.fill(self.settings.snake_color, rect)
