@@ -29,7 +29,7 @@ class Fruit:
 
     def _random_positions(self):
         """Return a random pos on the screen"""
-        return randint(0, self.settings.screen_width // self.fruit_dim - 1) * self.fruit_dim, randint(0, self.settings.screen_height // self.fruit_dim - 1) * self.fruit_dim
+        return randint(0, self.settings.screen_width // self.fruit_dim) * self.fruit_dim, randint(0, self.settings.screen_height // self.fruit_dim) * self.fruit_dim
     
     def draw_fruit(self):
         """Draw the fruit to the screen"""
