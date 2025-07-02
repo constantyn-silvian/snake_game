@@ -5,18 +5,16 @@ class Settings:
         """Initialize the settings"""
 
         # Settings for the screen
-        self.screen_width = 500
-        self.screen_height = 500
+        self.screen_width = 1000
+        self.screen_height = 700
         self.bgcolor = (0, 0, 0)
 
-        # Setting for the snake
-        self.snake_width = 10
-        self.snake_height = 10
+        # Setting for the snake 
+        self.snake_dim = 20
         self.snake_color = (4, 184, 52)
 
         # Settings for the fruit
-        self.fruit_width = 10
-        self.fruit_height = 10
+        self.fruit_dim = 20
         self.fruit_color = (255, 0, 0)
         self.fruit_value = 10
 
