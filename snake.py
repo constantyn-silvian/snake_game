@@ -80,7 +80,7 @@ class Snake:
     
     def append_tail(self):
         """Makes the snake bigger with """
-        self.snake_tail.append(self.snake_tail[-1])
+        self.snake_tail.insert(0, self.snake_tail[0])
 
     def collide_edges(self):
         """Check if the snake collides with the edges"""
